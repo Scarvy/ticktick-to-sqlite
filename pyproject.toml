@@ -10,7 +10,10 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License"
 ]
 dependencies = [
-    "click"
+    "click",
+    "ticktick-py",
+    "sqlite-utils",
+    "python-dotenv",
 ]
 
 [project.urls]
@@ -23,4 +26,7 @@ CI = "https://github.com/Scarvy/ticktick-to-sqlite/actions"
 ticktick-to-sqlite = "ticktick_to_sqlite.cli:cli"
 
 [project.optional-dependencies]
-test = ["pytest"]
+test = [
+    "pytest", 
+    "ruff"
+]
