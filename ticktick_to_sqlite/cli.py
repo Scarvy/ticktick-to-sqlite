@@ -105,19 +105,20 @@ def tasks(db_path, auth):
     uncompleted_tasks_table.upsert_all(uncompleted_tasks, alter=True)
 
 
-@cli.command(name="completed tasks")
+@cli.command(name="completed-tasks")
 @click.argument(
     "db_path",
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
 @click.argument(
-    "-s" "start_date",
+    "start_date",
     type=click.DateTime(),
     required=True,
 )
-@click.argument(
-    "-e" "end_date",
+@click.option(
+    "-e",
+    "end_date",
     type=click.DateTime(),
 )
 @click.option(
@@ -131,7 +132,7 @@ def completed_tasks(db_path, start_date, end_date, auth):
     "Fetch completed tasks."
     db = sqlite_utils.Database(db_path)
     token = load_token(auth)
-    username, password = load_login_creds()
+    username, password = load_login_creds(auth)
     completed_tasks = utils.completed_tasks(
         username, password, token, start_date, end_date
     )
@@ -158,7 +159,7 @@ def tags(db_path, auth):
     db = sqlite_utils.Database(db_path)
 
     token = load_token(auth)
-    username, password = load_login_creds()
+    username, password = load_login_creds(auth)
 
     tags = utils.get_tags(username, password, token)
 
@@ -183,7 +184,7 @@ def projects(db_path, auth):
     "Fetch projects."
     db = sqlite_utils.Database(db_path)
     token = load_token(auth)
-    username, password = load_login_creds()
+    username, password = load_login_creds(auth)
 
     projects = utils.get_projects(username, password, token)
 
@@ -191,6 +192,7 @@ def projects(db_path, auth):
     projects_table.upsert_all(projects, alter=True)
 
 
+@cli.command(name="project-folders")
 @click.argument(
     "db_path",
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
@@ -207,7 +209,7 @@ def project_folders(db_path, auth):
     """Fetch project folders"""
     db = sqlite_utils.Database(db_path)
     token = load_token(auth)
-    username, password = load_login_creds()
+    username, password = load_login_creds(auth)
 
     project_folders = utils.get_project_folders(username, password, token)
 
