@@ -99,11 +99,10 @@ def tasks(db_path, auth):
     token = load_token(auth)
     username, password = load_login_creds(auth)
 
-    uncompleted_tasks = utils.uncompleted_taks(username, password, token)
+    uncompleted_tasks = utils.uncompleted_tasks(username, password, token)
 
     uncompleted_tasks_table = db.table("uncompleted_tasks", pk="id")
     uncompleted_tasks_table.upsert_all(uncompleted_tasks, alter=True)
-    uncompleted_tasks_table.add_foreign_key("projectId", "projects", "id")
 
 
 @cli.command(name="completed tasks")
@@ -139,7 +138,6 @@ def completed_tasks(db_path, start_date, end_date, auth):
 
     completed_tasks_table = db.table("completed_tasks", pk="id")
     completed_tasks_table.upsert_all(completed_tasks, alter=True)
-    completed_tasks_table.add_foreign_key("projectId", "projects", "id")
 
 
 @cli.command(name="tags")
