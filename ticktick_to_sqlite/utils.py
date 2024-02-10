@@ -25,15 +25,18 @@ def completed_tasks(username, password, auth_token, start_date, end_date=None):
 
 
 def get_tags(usernmae, password, auth_token):
+    """Get tags from TickTick."""
     client = TickTickClient(usernmae, password, auth_token)
     return client.state["tags"]
 
 
 def get_projects(username, password, auth_token):
+    """Get projects (aka "List") in TickTick."""
     client = TickTickClient(username, password, auth_token)
     return client.state["projects"]
 
 
 def get_project_folders(username, password, auth_token):
+    """Get project folders (aka "List Folders") from"""
     client = TickTickClient(username, password, auth_token)
     return client.state["project_folders"]
