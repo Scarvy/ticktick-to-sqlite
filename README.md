@@ -11,7 +11,7 @@ Import TickTick data into a SQLite database
 
 **Pre-req:**
 
-- Register your app and create a `Client ID` and `Client Secret` [here.](https://lazeroffmichael.github.io/ticktick-py/#get-started)
+- Assuming you have a TickTick account, register your app and create a `Client ID` and `Client Secret` [here.](https://lazeroffmichael.github.io/ticktick-py/#get-started)
 
 Install this tool using `pip`:
 
