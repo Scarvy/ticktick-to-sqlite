@@ -17,7 +17,15 @@ Install this tool using `pip`:
 
 **Pre-requisite:**
 
-> Assuming you have a TickTick account, register your app and create a `client_id` and `client_secret`. lazeroffmichael's (author of `ticktick-py`) wrote a easy to follow ["Get Started"](https://lazeroffmichael.github.io/ticktick-py/#get-started) instructions to set up your app.
+1. Register your application.
+
+    * Assuming you have a TickTick account, register your app and create a `client_id` and `client_secret`.
+
+        > lazeroffmichael's (author of `ticktick-py`) wrote a easy to follow ["Get Started"](https://lazeroffmichael.github.io/ticktick-py/#get-started) instructions to set up your app.
+
+2. (Recommended) Set enviornment variables for your login credentials:
+    * `TICKTICK_USERNANE` - Your TickTick username
+    * `TICKTICK_PASSWORD` - Your TickTick password
 
 For help, run:
 
