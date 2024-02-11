@@ -49,7 +49,7 @@ def auth(auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
-@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option("--username", default=lambda: os.environ.get("TICKTICK_USERNAME", ""))
 @click.option(
     "--password",
     hide_input=True,
@@ -95,7 +95,7 @@ def tasks(db_path, username, password, auth):
     "end_date",
     type=click.DateTime(),
 )
-@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option("--username", default=lambda: os.environ.get("TICKTICK_USERNAME", ""))
 @click.option(
     "--password",
     hide_input=True,
@@ -131,7 +131,7 @@ def completed_tasks(db_path, start_date, end_date, username, password, auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
-@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option("--username", default=lambda: os.environ.get("TICKTICK_USERNAME", ""))
 @click.option(
     "--password",
     hide_input=True,
@@ -166,7 +166,7 @@ def tags(db_path, username, password, auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
-@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option("--username", default=lambda: os.environ.get("TICKTICK_USERNAME", ""))
 @click.option(
     "--password",
     hide_input=True,
@@ -200,7 +200,7 @@ def projects(db_path, username, password, auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
-@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option("--username", default=lambda: os.environ.get("TICKTICK_USERNAME", ""))
 @click.option(
     "--password",
     hide_input=True,
