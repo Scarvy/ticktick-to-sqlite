@@ -32,15 +32,6 @@ def auth(auth):
     client_secret = click.prompt("Client Secret")
     oauth_redirect_url = click.prompt("Redirect URL")
 
-    click.echo("Get login credentials and Paste it here:")
-    click.echo("User Credentials:")
-    username = click.prompt("Username", "")
-    password = click.prompt("Password", "")
-
-    # not login provided, use enviornment variables
-    if not username or not password:
-        username, password = utils.login_credentials()
-
     if pathlib.Path(auth).exists():
         auth_data = json.load(open(auth))
     else:
@@ -48,34 +39,8 @@ def auth(auth):
     auth_data["client_id"] = client_id
     auth_data["client_secret"] = client_secret
     auth_data["oauth_redirect_url"] = oauth_redirect_url
-    auth_data["username"] = username
-    auth_data["password"] = password
-    open(auth, "w").write(json.dumps(auth_data, indent=4) + "\n")
-
-
-@cli.command(name="login")
-@click.option(
-    "-a",
-    "--auth",
-    type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
-    default="auth.json",
-    help="Path to save login credentials to, defaults to auth.json",
-)
-def login(auth):
-    """Update login credentials."""
-    click.echo("Get login credentials and Paste it here:")
-    click.echo("User Credentials:")
-    username = click.prompt("Username", "")
-    password = click.prompt("Password", "")
-
-    if pathlib.Path(auth).exists():
-        auth_data = json.load(open(auth))
-    else:
-        auth_data = {}
-    auth_data["username"] = username
-    auth_data["password"] = password
-
-    open(auth, "w").write(json.dumps(auth_data, indent=4) + "\n")
+    with open(auth, "w") as f:
+        f.write(json.dumps(auth_data, indent=4) + "\n")
 
 
 @cli.command(name="tasks")
@@ -84,6 +49,12 @@ def login(auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
+@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option(
+    "--password",
+    hide_input=True,
+    default=lambda: os.environ.get("TICKTICK_PASSWORD", ""),
+)
 @click.option(
     "-a",
     "--auth",
@@ -91,13 +62,16 @@ def login(auth):
     default="auth.json",
     help="Path to OAuth token file",
 )
-def tasks(db_path, auth):
+def tasks(db_path, username, password, auth):
     "Fetch all uncompleted tasks."
 
     db = sqlite_utils.Database(db_path)
 
+    if not username or not password:
+        raise EnvironmentError(
+            "TICKTICK_USERNAME and TICKTICK_PASSWORD environment variables must be set."
+        )
     token = load_token(auth)
-    username, password = load_login_creds(auth)
 
     uncompleted_tasks = utils.uncompleted_tasks(username, password, token)
 
@@ -121,6 +95,12 @@ def tasks(db_path, auth):
     "end_date",
     type=click.DateTime(),
 )
+@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option(
+    "--password",
+    hide_input=True,
+    default=lambda: os.environ.get("TICKTICK_PASSWORD", ""),
+)
 @click.option(
     "-a",
     "--auth",
@@ -128,11 +108,15 @@ def tasks(db_path, auth):
     default="auth.json",
     help="Path to OAuth token file",
 )
-def completed_tasks(db_path, start_date, end_date, auth):
+def completed_tasks(db_path, start_date, end_date, username, password, auth):
     "Fetch completed tasks."
     db = sqlite_utils.Database(db_path)
+
+    if not username or not password:
+        raise EnvironmentError(
+            "TICKTICK_USERNAME and TICKTICK_PASSWORD environment variables must be set."
+        )
     token = load_token(auth)
-    username, password = load_login_creds(auth)
     completed_tasks = utils.completed_tasks(
         username, password, token, start_date, end_date
     )
@@ -147,6 +131,12 @@ def completed_tasks(db_path, start_date, end_date, auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
+@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option(
+    "--password",
+    hide_input=True,
+    default=lambda: os.environ.get("TICKTICK_PASSWORD", ""),
+)
 @click.option(
     "-a",
     "--auth",
@@ -154,12 +144,15 @@ def completed_tasks(db_path, start_date, end_date, auth):
     default="auth.json",
     help="Path to OAuth token file",
 )
-def tags(db_path, auth):
+def tags(db_path, username, password, auth):
     "Fetch tags."
     db = sqlite_utils.Database(db_path)
 
+    if not username or not password:
+        raise EnvironmentError(
+            "TICKTICK_USERNAME and TICKTICK_PASSWORD environment variables must be set."
+        )
     token = load_token(auth)
-    username, password = load_login_creds(auth)
 
     tags = utils.get_tags(username, password, token)
 
@@ -173,6 +166,12 @@ def tags(db_path, auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
+@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option(
+    "--password",
+    hide_input=True,
+    default=lambda: os.environ.get("TICKTICK_PASSWORD", ""),
+)
 @click.option(
     "-a",
     "--auth",
@@ -180,11 +179,14 @@ def tags(db_path, auth):
     default="auth.json",
     help="Path to OAuth token file",
 )
-def projects(db_path, auth):
+def projects(db_path, username, password, auth):
     "Fetch projects."
     db = sqlite_utils.Database(db_path)
+    if not username or not password:
+        raise EnvironmentError(
+            "TICKTICK_USERNAME and TICKTICK_PASSWORD environment variables must be set."
+        )
     token = load_token(auth)
-    username, password = load_login_creds(auth)
 
     projects = utils.get_projects(username, password, token)
 
@@ -198,6 +200,12 @@ def projects(db_path, auth):
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
     required=True,
 )
+@click.option("--username", default=lambda: os.environ("TICKTICK_USERNAME", ""))
+@click.option(
+    "--password",
+    hide_input=True,
+    default=lambda: os.environ.get("TICKTICK_PASSWORD", ""),
+)
 @click.option(
     "-a",
     "--auth",
@@ -205,11 +213,14 @@ def projects(db_path, auth):
     default="auth.json",
     help="Path to OAuth token file",
 )
-def project_folders(db_path, auth):
+def project_folders(db_path, username, password, auth):
     """Fetch project folders"""
     db = sqlite_utils.Database(db_path)
+    if not username or not password:
+        raise EnvironmentError(
+            "TICKTICK_USERNAME and TICKTICK_PASSWORD environment variables must be set."
+        )
     token = load_token(auth)
-    username, password = load_login_creds(auth)
 
     project_folders = utils.get_project_folders(username, password, token)
 
@@ -231,27 +242,3 @@ def load_token(auth):
         client_secret = os.environ.get("TICKTICK_CLIENT_SECRET") or None
         redirect_url = os.environ.get("TICKTICK_REDIRECT_URL") or None
     return utils.oauth_token(client_id, client_secret, redirect_url)
-
-
-def load_login_creds(auth):
-    try:
-        username = json.load(open(auth))["username"]
-        password = json.load(open(auth))["password"]
-    except (KeyError, FileNotFoundError):
-        username = None
-        password = None
-    if username is None and password is None:
-        username, password = login_credentials()
-    return username, password
-
-
-def login_credentials():
-    try:
-        username = os.environ["TICKTICK_USERNAME"]
-    except KeyError as e:
-        print("Enviornment variable TICKTICK_USERNAME does not exist.", e)
-    try:
-        password = os.environ["TICKTICK_PASSWORD"]
-    except KeyError as e:
-        print("Enviornment variable TICKTICK_PASSWORD does not exist.", e)
-    return username, password

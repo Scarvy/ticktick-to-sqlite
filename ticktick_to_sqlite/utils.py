@@ -3,6 +3,7 @@ from ticktick.oauth2 import OAuth2  # OAuth2 Manager
 
 
 def oauth_token(client_id, client_secret, redirect_uri):
+    """Generate new access token, or retreive cached one."""
     return OAuth2(
         client_id=client_id,
         client_secret=client_secret,
