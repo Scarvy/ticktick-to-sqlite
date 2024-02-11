@@ -9,15 +9,15 @@ Import TickTick data into a SQLite database
 
 ## Installation
 
-**Pre-req:**
-
-- Assuming you have a TickTick account, register your app and create a `Client ID` and `Client Secret` [here.](https://lazeroffmichael.github.io/ticktick-py/#get-started)
-
 Install this tool using `pip`:
 
     pip install ticktick-to-sqlite
 
 ## Usage
+
+**Pre-requisite:**
+
+> Assuming you have a TickTick account, register your app and create a `client_id` and `client_secret`. lazeroffmichael's (author of `ticktick-py`) wrote a easy to follow ["Get Started"](https://lazeroffmichael.github.io/ticktick-py/#get-started) instructions to set up your app.
 
 For help, run:
 
@@ -26,6 +26,32 @@ For help, run:
 You can also use:
 
     python -m ticktick_to_sqlite --help
+
+### Tasks
+
+Save your uncompleted tasks.
+
+    ticktick-to-sqlite tasks ticktick.db
+
+Save your completed tasks for a specified time range (ex. after Jan 1st, 2024).
+
+    ticktick-to-sqlite completed-tasks ticktick.db 2024-01-01
+
+### Tags
+
+Save your tags.
+
+    ticktick-to-sqlite tags ticktick.db
+
+### Projects
+
+Save your projects (aka "Lists").
+
+    ticktick-to-sqlite projects
+
+Save your project folders (aka "List Folders").
+
+    ticktick-to-sqlite project-folders
 
 ## Development
 
