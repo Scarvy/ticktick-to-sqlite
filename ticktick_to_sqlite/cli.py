@@ -27,7 +27,7 @@ def auth(auth):
     click.echo(
         "Register your application and obtain: Client ID Client secret, and pick a redirect URL and Paste it here:"
     )
-    click.echo("App Settings:")
+    click.echo()
     client_id = click.prompt("Client ID")
     client_secret = click.prompt("Client Secret")
     oauth_redirect_url = click.prompt("Redirect URL")
@@ -92,7 +92,7 @@ def tasks(db_path, username, password, auth):
 )
 @click.option(
     "-e",
-    "end_date",
+    "--end-date",
     type=click.DateTime(),
 )
 @click.option("--username", default=lambda: os.environ.get("TICKTICK_USERNAME", ""))
