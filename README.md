@@ -40,7 +40,7 @@ You can also use:
 Store app settings for OAuth.
 
     (venv) $ ticktick-to-sqlite auth
-    Register your application and obtain: Client ID Client secret, and pick a redirect URL and Paste it here:
+    Register your application and obtain: "Client ID", "Client Secret", and pick a "Redirect URL". Paste it here:
 
     Client ID: your_client_id
     Client Secret: your_client_secret
