@@ -1,6 +1,6 @@
 [project]
 name = "ticktick-to-sqlite"
-version = "0.1"
+version = "0.1.0"
 description = "Import TickTick data into a SQLite database"
 readme = "README.md"
 authors = [{name = "Scott Carvalho"}]
