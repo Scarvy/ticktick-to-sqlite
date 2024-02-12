@@ -175,6 +175,10 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 
+## macOS
 .DS_Store
+
+# project specific
 .token-oauth
 auth.json
+*.db
