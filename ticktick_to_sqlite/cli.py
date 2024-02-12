@@ -214,7 +214,7 @@ def projects(db_path, username, password, auth):
     help="Path to OAuth token file",
 )
 def project_folders(db_path, username, password, auth):
-    """Fetch project folders"""
+    """Fetch project folders."""
     db = sqlite_utils.Database(db_path)
     if not username or not password:
         raise EnvironmentError(

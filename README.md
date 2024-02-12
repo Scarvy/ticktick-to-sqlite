@@ -35,15 +35,26 @@ You can also use:
 
     python -m ticktick_to_sqlite --help
 
+### Authenticate
+
+Store app settings for OAuth.
+
+    (venv) $ ticktick-to-sqlite auth
+    Register your application and obtain: Client ID Client secret, and pick a redirect URL and Paste it here:
+
+    Client ID: your_client_id
+    Client Secret: your_client_secret
+    Redirect URL: https://127.0.0.1
+
 ### Tasks
 
 Save your uncompleted tasks.
 
     ticktick-to-sqlite tasks ticktick.db
 
-Save your completed tasks for a specified time range (ex. after Jan 1st, 2024).
+Save your completed tasks for a specified time range (ex. between Dec 31st, 2023 and Jan 31st, 2024).
 
-    ticktick-to-sqlite completed-tasks ticktick.db 2024-01-01
+    ticktick-to-sqlite completed-tasks ticktick.db 2023-12-31 --end-date 2024-01-31
 
 ### Tags
 
